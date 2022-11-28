@@ -10,6 +10,8 @@
 	<test name="Sample PoC">
 		<classes>
 			<class name="scripts.LoginTest"></class>
+			<class name="scripts.ApplyLeave"></class>
+			
 		</classes>
 	</test>
 </suite>
