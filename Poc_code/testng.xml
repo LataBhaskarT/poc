@@ -9,8 +9,8 @@
 
 	<test name="Sample PoC">
 		<classes>
-			<class name="scripts.LoginTest"></class>
-			<class name="scripts.ApplyLeave"></class>
+			<!-- <class name="scripts.ApplyLeave"></class>  -->
+			 <class name="scripts.RegisterTest"></class>
 			
 			
 		</classes>

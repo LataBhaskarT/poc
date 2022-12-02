@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Orange CRM Application Test Automation Test Suite]" guice-stage="DEVELOPMENT">
+  <listeners>
+    <listener class-name="utility.ExtentReporterNG"/>
+  </listeners>
+  <test name="Sample PoC(failed)">
+    <classes>
+      <class name="scripts.RegisterTest">
+        <methods>
+          <include name="registerPageTest"/>
+          <include name="closeBrowser"/>
+          <include name="openBrowser"/>
+        </methods>
+      </class> <!-- scripts.RegisterTest -->
+    </classes>
+  </test> <!-- Sample PoC(failed) -->
+</suite> <!-- Failed suite [Orange CRM Application Test Automation Test Suite] -->

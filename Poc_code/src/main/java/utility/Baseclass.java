@@ -27,10 +27,11 @@ import org.testng.annotations.BeforeTest;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Baseclass {
+public class Baseclass extends ExtentReporterNG {
 	// TODO Auto-generated method stub
 	public static WebDriver driver;
 	public static Properties propFile;
@@ -38,47 +39,38 @@ public class Baseclass {
 	public ExtentTest extentTest;
 
 	
-	public void TestBase(){
-		try {
-			propFile = new Properties();
-			FileInputStream ip = new FileInputStream(System.getProperty("user.dir")+ "/src/main/java/utility/config.properties");
-			propFile.load(ip);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@BeforeTest
+	/*@BeforeTest
 	public void setExtent(){
 		extent = new ExtentReports(System.getProperty("user.dir")+"/test-output1/ExtentReport.html", true);
 		
-	}
+	}*/
 	
-	@AfterTest
+	/*@AfterTest
 	public void endReport(){
 		extent.flush();
 		extent.close();
-	}
+	}*/
 	
-	@SuppressWarnings("deprecation")
 	@BeforeMethod
-	public static void openBrowser() throws InterruptedException {
-		
-			WebDriverManager.chromedriver().setup();
-			// Create an object of desired capabilities class with Chrome driver
-			DesiredCapabilities SSLCertificate = DesiredCapabilities.chrome();
-			// Set the pre defined capability – ACCEPT_SSL_CERTS value to true
-			SSLCertificate.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-			// Open a new instance of chrome driver with the desired capability
-			 driver = new ChromeDriver(SSLCertificate);
-			//driver = new ChromeDriver();
-			driver.manage().window().maximize();
-			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-			/*driver.manage().timeouts().pageLoadTimeout(TestUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);*/
-			driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+	public static void openBrowser() throws IOException{
+		propFile = new Properties();
+		FileInputStream ip = new FileInputStream(
+				System.getProperty("user.dir") + "/src/main/java/utility/config.properties");
+		propFile.load(ip);
+
+		WebDriverManager.chromedriver().setup();
+		DesiredCapabilities SSLCertificate = DesiredCapabilities.chrome();
+		// Set the pre defined capability – ACCEPT_SSL_CERTS value to true
+		SSLCertificate.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+		// Open a new instance of chrome driver with the desired capability
+		 driver = new ChromeDriver(SSLCertificate);
+
+		//driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		String applicationUrl = propFile.getProperty("url");
+		// driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		driver.get(applicationUrl);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	public static String getScreenshot(WebDriver driver, String screenshotName) throws IOException{
@@ -97,33 +89,11 @@ public class Baseclass {
 		WebDriverWait wait=new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
-	@AfterMethod
-	public void reportAndcloseBrowser(ITestResult result){
-		/*if(result.getStatus()==ITestResult.FAILURE){
-			extentTest.log(LogStatus.FAIL, "TEST CASE FAILED IS "+result.getName()); //to add name in extent report
-			extentTest.log(LogStatus.FAIL, "TEST CASE FAILED IS "+result.getThrowable()); //to add error/exception in extent report
-			
-			extentTest.log(LogStatus.FAIL,result.getName() );
-			String screenshotPath = FreeCRMTest.getScreenshot(driver, result.getName());
-			extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(screenshotPath)); //to add screenshot in extent report
-			//extentTest.log(LogStatus.FAIL, extentTest.addScreencast(screenshotPath)); //to add screencast/video in extent report
-		}
-		else if(result.getStatus()==ITestResult.SKIP){
-			extentTest.log(LogStatus.SKIP, "Test Case SKIPPED IS " + result.getName());
-		}
-		else if(result.getStatus()==ITestResult.SUCCESS){
-			extentTest.log(LogStatus.PASS, "Test Case PASSED IS " + result.getName());
 
-		}
-		
-		
-		extent.endTest(extentTest); //ending test and ends the current test and prepare to create html report
-		*/
+	
+	@AfterMethod
+	public void closeBrowser() {
 		driver.quit();
 	}
 
-	public void onException(Throwable throwable, WebDriver driver) {
-		// TODO Auto-generated method stub
-		
-	}
 }

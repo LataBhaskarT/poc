@@ -10,18 +10,19 @@ package utility;
 
  */
 
-import java.io.IOException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
+import com.sun.tools.sjavac.Log;
+
 public class WebEventListener extends Baseclass implements WebDriverEventListener {
 
 	public void beforeNavigateTo(String url, WebDriver driver) {
-		System.out.println("Before navigating to: '" + url + "'");
+		
+		
 	}
 
 	public void afterNavigateTo(String url, WebDriver driver) {
@@ -42,6 +43,7 @@ public class WebEventListener extends Baseclass implements WebDriverEventListene
 
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		System.out.println("Clicked on: " + element.toString());
+		Log.info("Clicked");
 	}
 
 	public void beforeNavigateBack(WebDriver driver) {
